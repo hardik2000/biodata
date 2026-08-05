@@ -342,10 +342,25 @@
             object-fit: cover;
             border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease, height 0.4s ease, object-fit 0.4s ease;
+            cursor: pointer;
         }
         .gallery img:hover {
             transform: scale(1.03);
+        }
+        .gallery img.expanded {
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+            background: #f0ebe4;
+        }
+        .gallery-hint {
+            display: none;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-style: italic;
         }
 
         /* Contact Section */
@@ -423,7 +438,9 @@
             .details-grid { grid-template-columns: 1fr; }
             .family-tree { grid-template-columns: 1fr; }
             .gallery { grid-template-columns: 1fr; }
-            .gallery img { height: 280px; }
+            .gallery img { height: 300px; object-fit: cover; }
+            .gallery img.expanded { height: auto; max-height: none; object-fit: contain; }
+            .gallery-hint { display: block; }
             .hero-photo { width: 160px; height: 160px; }
             .preference-box { padding: 2rem 1.5rem; }
             .contact-links { flex-direction: column; align-items: center; }
@@ -432,6 +449,7 @@
             .hero-photo { width: 140px; height: 140px; }
             .detail-card { padding: 1.4rem; }
             .section { padding: 3rem 1.2rem; }
+            .gallery img { height: 250px; }
         }
     </style>
 </head>
@@ -640,8 +658,8 @@
             <p class="section-subtitle">A glimpse of Hardik</p>
         </div>
         <div class="gallery" id="photo-gallery">
+            <p class="gallery-hint">📱 Tap any photo to expand it fully</p>
             <!-- Photos are auto-loaded from the photos/ folder -->
-            <!-- Just add photo-1.jpeg, photo-2.jpeg, etc. to the photos/ folder -->
         </div>
     </section>
 
@@ -687,6 +705,13 @@
             img.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
             img.loading = 'lazy';
             gallery.appendChild(img);
+        });
+
+        // Tap-to-expand on mobile
+        gallery.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG' && window.innerWidth <= 768) {
+                e.target.classList.toggle('expanded');
+            }
         });
 
         // Intersection Observer for scroll animations
