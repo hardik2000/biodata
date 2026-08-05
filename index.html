@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardik Bhatia — Matrimonial Biodata</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e8d5a3;
+            --burgundy: #6b2737;
+            --cream: #faf6f0;
+            --dark: #1a1a2e;
+            --text: #2d2d2d;
+            --text-light: #5a5a5a;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(201,169,110,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(201,169,110,0.08) 0%, transparent 50%);
+        }
+        .hero-mantra {
+            font-family: 'Noto Sans Devanagari', serif;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInDown 1s ease 0.3s forwards;
+        }
+        .hero-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold);
+            box-shadow: 0 0 40px rgba(201,169,110,0.3);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInScale 1s ease 0.5s forwards;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #fff;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.7s forwards;
+        }
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.9s forwards;
+        }
+        .hero-tagline {
+            max-width: 600px;
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            line-height: 1.8;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.1s forwards;
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gold);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeInUp 1s ease 1.5s forwards;
+        }
+        .scroll-indicator .arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--gold);
+            border-bottom: 2px solid var(--gold);
+            transform: rotate(45deg);
+            animation: bounce 2s infinite;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--burgundy);
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* Detail Cards */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .detail-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(201,169,110,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .detail-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+        .detail-card .icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .detail-card .label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.4rem;
+        }
+        .detail-card .value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        /* Family Section */
+        .family-tree {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .family-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(201,169,110,0.15);
+            transition: transform 0.3s ease;
+        }
+        .family-card:hover { transform: translateY(-4px); }
+        .family-card .role {
+            font-size: 0.8rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .family-card .name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+        .family-card .desc {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Education & Career */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--gold), var(--gold-light));
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            padding-left: 1.5rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.35rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 3px solid var(--cream);
+        }
+        .timeline-item .period {
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .timeline-item h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin: 0.3rem 0;
+            color: var(--text);
+        }
+        .timeline-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Partner Preference */
+        .preference-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 3rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .preference-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 70%);
+        }
+        .preference-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--gold-light);
+            margin-bottom: 1rem;
+        }
+        .preference-box p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.85);
+            position: relative;
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .gallery img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            transition: transform 0.4s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.03);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--burgundy), #4a1a28);
+            padding: 5rem 2rem;
+            text-align: center;
+            color: #fff;
+        }
+        .contact-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1rem;
+        }
+        .contact-section p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .contact-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--dark);
+            color: rgba(255,255,255,0.4);
+            font-size: 0.85rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: rotate(45deg) translateY(0); }
+            40% { transform: rotate(45deg) translateY(8px); }
+            60% { transform: rotate(45deg) translateY(4px); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .section { padding: 3.5rem 1.5rem; }
+            .details-grid { grid-template-columns: 1fr; }
+            .family-tree { grid-template-columns: 1fr; }
+            .gallery { grid-template-columns: 1fr; }
+            .gallery img { height: 280px; }
+            .hero-photo { width: 160px; height: 160px; }
+            .preference-box { padding: 2rem 1.5rem; }
+            .contact-links { flex-direction: column; align-items: center; }
+        }
+        @media (max-width: 480px) {
+            .hero-photo { width: 140px; height: 140px; }
+            .detail-card { padding: 1.4rem; }
+            .section { padding: 3rem 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <p class="hero-mantra">|| श्री गणेशाय नमः ||</p>
+        <img class="hero-photo" src="photos/photo-1.jpeg" alt="Hardik Bhatia">
+        <h1>Hardik Bhatia</h1>
+        <p class="hero-subtitle">Senior Software Engineer · Amazon Web Services</p>
+        <p class="hero-tagline">"A well-educated, ambitious, and family-oriented young man who believes in balancing professional success with deeply rooted family values. Humble, respectful, and genuinely caring by nature — he enjoys playing badminton, cooking, watching movies, and exploring new horizons through travelling."</p>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="arrow"></div>
+        </div>
+    </section>
+
+    <!-- Personal Details -->
+    <section class="section">
+        <div class="reveal">
+            <h2 class="section-title">Personal Attributes</h2>
+            <p class="section-subtitle">The essential details about Hardik</p>
+        </div>
+        <div class="details-grid">
+            <div class="detail-card reveal-left">
+                <div class="icon">📅</div>
+                <div class="label">Date of Birth</div>
+                <div class="value">14 June 2000</div>
+            </div>
+            <div class="detail-card reveal-right">
+                <div class="icon">🕘</div>
+                <div class="label">Time of Birth</div>
+                <div class="value">9:16 PM</div>
+            </div>
+            <div class="detail-card reveal-left">
+                <div class="icon">📍</div>
+                <div class="label">Place of Birth</div>
+                <div class="value">Faridabad, Haryana, India</div>
+            </div>
+            <div class="detail-card reveal-right">
+                <div class="icon">📏</div>
+                <div class="label">Height</div>
+                <div class="value">6'1"</div>
+            </div>
+            <div class="detail-card reveal-left">
+                <div class="icon">💍</div>
+                <div class="label">Marital Status</div>
+                <div class="value">Never Married</div>
+            </div>
+            <div class="detail-card reveal-right">
+                <div class="icon">🌍</div>
+                <div class="label">Current Residence</div>
+                <div class="value">Berlin, Germany</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Religious & Cultural Heritage -->
+    <section class="section">
+        <div class="reveal">
+            <h2 class="section-title">Heritage & Roots</h2>
+            <p class="section-subtitle">Religious and linguistic background</p>
+        </div>
+        <div class="details-grid">
+            <div class="detail-card reveal">
+                <div class="icon">🙏</div>
+                <div class="label">Religion</div>
+                <div class="value">Sikh</div>
+            </div>
+            <div class="detail-card reveal">
+                <div class="icon">👨‍👩‍👦</div>
+                <div class="label">Community / Clan</div>
+                <div class="value">Bhatia</div>
+            </div>
+            <div class="detail-card reveal">
+                <div class="icon">🗣️</div>
+                <div class="label">Mother Tongue</div>
+                <div class="value">Hindi</div>
+            </div>
+            <div class="detail-card reveal">
+                <div class="icon">🏠</div>
+                <div class="label">Originally From</div>
+                <div class="value">Faridabad, Haryana, India</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education & Career -->
+    <section class="section">
+        <div class="reveal">
+            <h2 class="section-title">Education & Career</h2>
+            <p class="section-subtitle">Academic journey and professional growth</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item reveal-left">
+                <span class="period">Dec 2025 – Present</span>
+                <h3>Software Development Engineer II</h3>
+                <p>Amazon Web Services (AWS) · Berlin, Germany · German Permanent Resident (PR)</p>
+            </div>
+            <div class="timeline-item reveal-left">
+                <span class="period">Dec 2022 – Nov 2025</span>
+                <h3>Software Development Engineer</h3>
+                <p>Amazon Web Services (AWS) · Berlin, Germany</p>
+            </div>
+            <div class="timeline-item reveal-left">
+                <span class="period">Jun 2022 – Nov 2022</span>
+                <h3>Software Engineer</h3>
+                <p>Gameskraft · Bengaluru, Karnataka, India</p>
+            </div>
+            <div class="timeline-item reveal-left">
+                <span class="period">May 2021 – Jul 2021</span>
+                <h3>Software Development Intern</h3>
+                <p>Decimal Point Analytics</p>
+            </div>
+            <div class="timeline-item reveal-left">
+                <span class="period">2018 – 2022</span>
+                <h3>B.Tech, Computer Science</h3>
+                <p>Visvesvaraya National Institute of Technology (VNIT), Nagpur</p>
+            </div>
+            <div class="timeline-item reveal-left">
+                <span class="period">2016 – 2018</span>
+                <h3>AISSCE, Science</h3>
+                <p>Modern Delhi Public School, Faridabad</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family -->
+    <section class="section">
+        <div class="reveal">
+            <h2 class="section-title">Family Tree</h2>
+            <p class="section-subtitle">A close-knit, loving family rooted in values</p>
+        </div>
+        <div class="family-tree">
+            <div class="family-card reveal-left">
+                <div class="role">Father</div>
+                <div class="name">Sh. Gulshan Kumar Bhatia</div>
+                <div class="desc">Superintendent, India Post (Government of India Service)</div>
+            </div>
+            <div class="family-card reveal-right">
+                <div class="role">Mother</div>
+                <div class="name">Mrs. Karamjeet Kaur Bhatia</div>
+                <div class="desc">Homemaker — the heart and soul of the family</div>
+            </div>
+            <div class="family-card reveal-left">
+                <div class="role">Brother</div>
+                <div class="name">Swagat</div>
+                <div class="desc">B.Tech in Mechanical Engineering from BITS Pilani, Pilani, Rajasthan</div>
+            </div>
+            <div class="family-card reveal-right">
+                <div class="role">Sister</div>
+                <div class="name">Herleen</div>
+                <div class="desc">Currently studying in Grade 10</div>
+            </div>
+            <div class="family-card reveal">
+                <div class="role">Ancestral Home</div>
+                <div class="name">Faridabad, Haryana</div>
+                <div class="desc">64C, Block L, NIT-5, Faridabad, Haryana, India</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interests -->
+    <section class="section">
+        <div class="reveal">
+            <h2 class="section-title">Interests & Hobbies</h2>
+            <p class="section-subtitle">What lights him up beyond work</p>
+        </div>
+        <div class="details-grid">
+            <div class="detail-card reveal">
+                <div class="icon">🏸</div>
+                <div class="label">Sport</div>
+                <div class="value">Badminton</div>
+            </div>
+            <div class="detail-card reveal">
+                <div class="icon">🍳</div>
+                <div class="label">Creative Outlet</div>
+                <div class="value">Cooking</div>
+            </div>
+            <div class="detail-card reveal">
+                <div class="icon">🎬</div>
+                <div class="label">Entertainment</div>
+                <div class="value">Movies</div>
+            </div>
+            <div class="detail-card reveal">
+                <div class="icon">✈️</div>
+                <div class="label">Passion</div>
+                <div class="value">Travelling & Exploring New Horizons</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Preference -->
+    <section class="section">
+        <div class="preference-box reveal">
+            <h3>💕 Partner Preference</h3>
+            <p>We are looking for a well-educated, kind-hearted, respectful, and family-oriented partner who deeply values relationship balance, transparent mutual understanding, and wishes to build a bright, happy future together.</p>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="section">
+        <div class="reveal">
+            <h2 class="section-title">Photographs</h2>
+            <p class="section-subtitle">A glimpse of Hardik</p>
+        </div>
+        <div class="gallery" id="photo-gallery">
+            <!-- Photos are auto-loaded from the photos/ folder -->
+            <!-- Just add photo-1.jpeg, photo-2.jpeg, etc. to the photos/ folder -->
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section">
+        <div class="reveal">
+            <h2>Get In Touch</h2>
+            <p>Thank you for your valuable time and consideration</p>
+            <div class="contact-links">
+                <a href="tel:+919891203654" class="contact-link">
+                    📞 <span>+91 9891203654</span>
+                </a>
+                <a href="mailto:gulshanbhatia64@gmail.com" class="contact-link">
+                    ✉️ <span>gulshanbhatia64@gmail.com</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Made with ❤️ · Hardik Bhatia Matrimonial Biodata</p>
+    </footer>
+
+    <!-- Scroll Animation Script -->
+    <script>
+        // ===========================================
+        // PHOTO CONFIG — Just add filenames here when you add new photos to the photos/ folder
+        // ===========================================
+        const photos = [
+            'photos/photo-1.jpeg',
+            'photos/photo-2.jpeg',
+            'photos/photo-3.jpeg',
+            'photos/photo-4.jpeg',
+        ];
+
+        // Auto-render gallery
+        const gallery = document.getElementById('photo-gallery');
+        photos.forEach((src, index) => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Hardik Bhatia Photo ${index + 1}`;
+            img.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
+            img.loading = 'lazy';
+            gallery.appendChild(img);
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add staggered delay for grid items
+                    const delay = entry.target.dataset.delay || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, delay);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all reveal elements
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el, index) => {
+            // Add stagger delay for siblings
+            const parent = el.parentElement;
+            const siblings = parent.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+            const siblingIndex = Array.from(siblings).indexOf(el);
+            el.dataset.delay = siblingIndex * 100;
+            observer.observe(el);
+        });
+
+        // Smooth parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            if (scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+        });
+
+        // Navbar scroll effect (progressive enhancement)
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
