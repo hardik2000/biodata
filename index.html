@@ -65,6 +65,7 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
         .hero::before {
             content: '';
@@ -148,6 +149,9 @@
             padding: 5rem 2rem;
             max-width: 900px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            background: var(--cream);
         }
         .section-title {
             font-family: 'Playfair Display', serif;
@@ -333,7 +337,7 @@
         /* Photo Gallery */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
         }
         .gallery img {
@@ -437,8 +441,8 @@
             .section { padding: 3.5rem 1.5rem; }
             .details-grid { grid-template-columns: 1fr; }
             .family-tree { grid-template-columns: 1fr; }
-            .gallery { grid-template-columns: 1fr; }
-            .gallery img { height: 300px; object-fit: cover; }
+            .gallery { grid-template-columns: 1fr; gap: 1rem; }
+            .gallery img { height: auto; max-height: 500px; object-fit: contain; }
             .gallery img.expanded { height: auto; max-height: none; object-fit: contain; }
             .gallery-hint { display: block; }
             .hero-photo { width: 160px; height: 160px; }
@@ -449,7 +453,7 @@
             .hero-photo { width: 140px; height: 140px; }
             .detail-card { padding: 1.4rem; }
             .section { padding: 3rem 1.2rem; }
-            .gallery img { height: 250px; }
+            .gallery img { height: auto; max-height: 450px; }
         }
     </style>
 </head>
@@ -457,7 +461,7 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <p class="hero-mantra">|| ਧੰਨ ਗੁਰੂ ਨਾਨਕ ||</p>
+        <p class="hero-mantra">|| Dhan Guru Nanak ||</p>
         <img class="hero-photo" src="photos/icon.jpeg" alt="Hardik Bhatia">
         <h1>Hardik Bhatia</h1>
         <p class="hero-subtitle">Senior Software Engineer · Amazon Web Services</p>
@@ -478,7 +482,7 @@
             <div class="detail-card reveal-left">
                 <div class="icon">📅</div>
                 <div class="label">Date of Birth</div>
-                <div class="value">14 June 2000</div>
+                <div class="value">14-06-2000</div>
             </div>
             <div class="detail-card reveal-right">
                 <div class="icon">🕘</div>
@@ -698,23 +702,33 @@
     <!-- Scroll Animation Script -->
     <script>
         // ===========================================
-        // PHOTO CONFIG — Just add filenames here when you add new photos to the photos/ folder
+        // DYNAMIC PHOTO LOADER - automatically finds photos in photos/ folder
+        // Tries photo-1.jpeg through photo-20.jpeg and loads whatever exists
         // ===========================================
-        const photos = [
-            'photos/photo-2.jpeg',
-            'photos/photo-3.jpeg',
-        ];
-
-        // Auto-render gallery
         const gallery = document.getElementById('photo-gallery');
-        photos.forEach((src, index) => {
+        let photosLoaded = 0;
+
+        function tryLoadPhoto(index) {
             const img = document.createElement('img');
-            img.src = src;
-            img.alt = `Hardik Bhatia Photo ${index + 1}`;
-            img.classList.add(index % 2 === 0 ? 'reveal-left' : 'reveal-right');
+            img.src = `photos/photo-${index}.jpeg`;
+            img.alt = `Hardik Bhatia Photo ${index}`;
+            img.classList.add(photosLoaded % 2 === 0 ? 'reveal-left' : 'reveal-right');
             img.loading = 'lazy';
-            gallery.appendChild(img);
-        });
+            img.onload = function() {
+                photosLoaded++;
+                gallery.appendChild(img);
+                // Re-observe for scroll animation
+                observer.observe(img);
+            };
+            img.onerror = function() {
+                // Photo doesn't exist, skip silently
+            };
+        }
+
+        // Try loading photo-1 through photo-20
+        for (let i = 1; i <= 20; i++) {
+            tryLoadPhoto(i);
+        }
 
         // Tap/click to expand photos on any device
         gallery.addEventListener('click', (e) => {
@@ -752,13 +766,12 @@
             observer.observe(el);
         });
 
-        // Smooth parallax effect on hero
+        // Smooth fade effect on hero (content only, no transform to prevent overlap)
         window.addEventListener('scroll', () => {
             const hero = document.querySelector('.hero');
             const scrolled = window.pageYOffset;
             if (scrolled < window.innerHeight) {
-                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.7;
             }
         });
 
