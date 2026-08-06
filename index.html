@@ -355,7 +355,7 @@
             background: #f0ebe4;
         }
         .gallery-hint {
-            display: none;
+            display: block;
             text-align: center;
             color: var(--text-light);
             font-size: 0.85rem;
@@ -458,10 +458,10 @@
     <!-- Hero Section -->
     <section class="hero">
         <p class="hero-mantra">|| ਧੰਨ ਗੁਰੂ ਨਾਨਕ ||</p>
-        <img class="hero-photo" src="photos/photo-2.jpeg" alt="Hardik Bhatia">
+        <img class="hero-photo" src="photos/icon.jpeg" alt="Hardik Bhatia">
         <h1>Hardik Bhatia</h1>
         <p class="hero-subtitle">Senior Software Engineer · Amazon Web Services</p>
-        <p class="hero-tagline">"A well-educated, ambitious, and family-oriented young man who believes in balancing professional success with deeply rooted family values. Humble, respectful, and genuinely caring by nature — he enjoys playing badminton, cooking, watching movies, and exploring new horizons through travelling."</p>
+        <p class="hero-tagline">"A well-educated, ambitious, and family-oriented young man who believes in balancing professional success with deeply rooted family values. Humble, respectful, and genuinely caring by nature — he enjoys playing badminton, watching movies, and exploring new horizons through travelling."</p>
         <div class="scroll-indicator">
             <span>SCROLL</span>
             <div class="arrow"></div>
@@ -598,7 +598,7 @@
             <div class="family-card reveal-left">
                 <div class="role">Father</div>
                 <div class="name">Sh. Gulshan Bhatia</div>
-                <div class="desc">Superintendent, India Post (Government of India Service) (In Service)</div>
+                <div class="desc">Superintendent, India Post (Government of India Service), In Service</div>
             </div>
             <div class="family-card reveal-right">
                 <div class="role">Mother</div>
@@ -613,7 +613,7 @@
             <div class="family-card reveal-right">
                 <div class="role">Sister</div>
                 <div class="name">Harleen</div>
-                <div class="desc">Currently studying in Grade 10</div>
+                <div class="desc">Student, Class Xth</div>
             </div>
             <div class="family-card reveal">
                 <div class="role">House Address</div>
@@ -652,7 +652,7 @@
     <section class="section">
         <div class="preference-box reveal">
             <h3>💕 Partner Preference</h3>
-            <p>We are looking for a well-educated, kind-hearted, respectful, and family-oriented partner who deeply values relationship balance, transparent mutual understanding, and wishes to build a bright, happy future together.</p>
+            <p>We are looking for a well-educated, kind-hearted, respectful, and family-oriented life partner who deeply values relationship balance, transparent mutual understanding, and wishes to build a bright, happy future together.</p>
         </div>
     </section>
 
@@ -662,8 +662,8 @@
             <h2 class="section-title">Photographs</h2>
             <p class="section-subtitle">A glimpse of Hardik</p>
         </div>
+        <p class="gallery-hint">Click on any photo to expand it fully</p>
         <div class="gallery" id="photo-gallery">
-            <p class="gallery-hint">📱 Tap any photo to expand it fully</p>
             <!-- Photos are auto-loaded from the photos/ folder -->
         </div>
     </section>
@@ -716,9 +716,9 @@
             gallery.appendChild(img);
         });
 
-        // Tap-to-expand on mobile
+        // Tap/click to expand photos on any device
         gallery.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG' && window.innerWidth <= 768) {
+            if (e.target.tagName === 'IMG') {
                 e.target.classList.toggle('expanded');
             }
         });
